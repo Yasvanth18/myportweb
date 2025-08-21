@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yasvanth - Full Stack Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #6366f1;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #6366f1;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: slideUp 0.8s ease 0.2s forwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #f59e0b;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            animation: slideUp 0.8s ease 0.4s forwards;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-white {
+            background: white;
+        }
+
+        .section-gray {
+            background: #f8fafc;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #1f2937;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto;
+            border: 4px solid #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            color: #6b7280;
+        }
+
+        .education {
+            background: #f3f4f6;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+        }
+
+        .education h4 {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .degree {
+            margin-bottom: 1rem;
+        }
+
+        .degree-name {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .university {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .cgpa {
+            color: #059669;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+        }
+
+        .skill-category h3 {
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .project-body {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-description {
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6b7280;
+        }
+
+        .contact-item a {
+            color: #6366f1;
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            display: inline-block;
+            background: #6366f1;
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: background 0.3s ease, transform 0.3s ease;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-link:hover {
+            background: #4f46e5;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Yasvanth</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Hello, I'm Yasvanth</h1>
+                <p>Full Stack Developer & Data Science Enthusiast</p>
+                <a href="#contact" class="cta-button">Get In Touch</a>
+            </div>
+        </section>
+
+        <section id="about" class="section-white">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <div class="about-image">
+                        <img src="yasvanth-photo.jpg"
+                             alt="Yasvanth's Profile Photo">
+                    </div>
+                    <div class="about-text">
+                        <h3>Full Stack Developer from Chennai</h3>
+                        <p>I'm a passionate Full Stack Developer with a strong foundation in both software development and data science. Currently pursuing dual degrees that combine technical expertise with analytical thinking.</p>
+                        <p>I love building efficient, scalable applications and exploring the intersection of web development and data science to create meaningful digital experiences.</p>
+                        
+                        <div class="education">
+                            <h4>Education</h4>
+                            <div class="degree">
+                                <div class="degree-name">B.Tech Computer Science & Engineering</div>
+                                <div class="university">SRM University, Ramapuram</div>
+                                <div class="cgpa">CGPA: 9.28</div>
+                            </div>
+                            <div class="degree">
+                                <div class="degree-name">BS Data Science</div>
+                                <div class="university">Indian Institute of Technology Madras (IIT-M)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section-gray">
+            <div class="container">
+                <h2 class="section-title">Skills & Technologies</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Programming Languages</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">C</span>
+                            <span class="skill-tag">C++</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Java</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Core Computer Science</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Data Structures & Algorithms</span>
+                            <span class="skill-tag">Statistics</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Libraries & Frameworks</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">NumPy</span>
+                            <span class="skill-tag">Pandas</span>
+                            <span class="skill-tag">Matplotlib</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Tools & Technologies</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Excel</span>
+                            <span class="skill-tag">PIL</span>
+                            <span class="skill-tag">Twilio API</span>
+                            <span class="skill-tag">Database Management</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section-white">
+            <div class="container">
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3 class="project-title">Restaurant Management System</h3>
+                        </div>
+                        <div class="project-body">
+                            <p class="project-description">A comprehensive restaurant management system built with database integration and Python Imaging Library (PIL) for enhanced user interface and data visualization.</p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Database</span>
+                                <span class="tech-tag">PIL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3 class="project-title">Semaphore Implementation</h3>
+                        </div>
+                        <div class="project-body">
+                            <p class="project-description">Advanced implementation of semaphore synchronization mechanisms using C++ to demonstrate concurrent programming concepts and thread management.</p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">C++</span>
+                                <span class="tech-tag">Concurrency</span>
+                                <span class="tech-tag">Threading</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3 class="project-title">Weather Prediction System</h3>
+                        </div>
+                        <div class="project-body">
+                            <p class="project-description">Intelligent weather prediction application that integrates Twilio API for real-time notifications and provides accurate weather forecasting capabilities.</p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Twilio API</span>
+                                <span class="tech-tag">Machine Learning</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section-gray">
+            <div class="container">
+                <h2 class="section-title">Let's Connect</h2>
+                <div class="contact-content">
+                    <p>I'm always interested in discussing new opportunities, innovative projects, or just having a chat about technology and development.</p>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span>📧</span>
+                            <a href="mailto:yasvanththiru@gmail.com">yasvanththiru@gmail.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <span>📍</span>
+                            <span>Chennai, Tamil Nadu, India</span>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/yasvanth-t-a751111b6" class="social-link" target="_blank">
+                            <span>in</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Yasvanth. Built with passion and code.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe skill categories and project cards
+        document.querySelectorAll('.skill-category, .project-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Mobile menu toggle (basic implementation)
+        const createMobileMenu = () => {
+            const nav = document.querySelector('nav');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (window.innerWidth <= 768) {
+                const menuToggle = document.createElement('button');
+                menuToggle.innerHTML = '☰';
+                menuToggle.style.cssText = `
+                    background: none;
+                    border: none;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    color: #333;
+                `;
+                
+                menuToggle.addEventListener('click', () => {
+                    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                    navLinks.style.position = 'absolute';
+                    navLinks.style.top = '100%';
+                    navLinks.style.left = '0';
+                    navLinks.style.width = '100%';
+                    navLinks.style.background = 'white';
+                    navLinks.style.flexDirection = 'column';
+                    navLinks.style.padding = '1rem';
+                    navLinks.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                });
+                
+                if (!nav.querySelector('button')) {
+                    nav.appendChild(menuToggle);
+                }
+            }
+        };
+
+        // Initialize mobile menu on load and resize
+        window.addEventListener('load', createMobileMenu);
+        window.addEventListener('resize', createMobileMenu);
+
+        // Add some interactive hover effects
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
